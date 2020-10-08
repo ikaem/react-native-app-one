@@ -26,20 +26,20 @@ const AdminHomeScreen: React.FC<AdminHomeScreenProps> = ({
           <AdminCustomButton
             onNavigate={() =>
               navigation.navigate("OrdersOverviewScreen", {
-                completed: false,
+                // completed: false,
               })
             }
-            label="Nepotvrđene narudžbe"
+            label="Narudžbe"
           />
 
-          <AdminCustomButton
+          {/* <AdminCustomButton
             label="Potvrđene narudžbe"
             onNavigate={() =>
               navigation.navigate("OrdersOverviewScreen", {
                 completed: true,
               })
             }
-          />
+          /> */}
         </View>
       </View>
       <View style={styles.section}>

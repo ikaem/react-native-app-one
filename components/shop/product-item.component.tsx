@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   StyleSheet,
@@ -8,16 +8,70 @@ import {
   View,
   Image,
 } from "react-native";
+import { or } from "react-native-reanimated";
 
 import Colors from "../../constants/colors.constants";
 import Product from "../../models/product.model";
 
 interface ProductItemProps {
   item: Product;
+  onSetProduct: (
+    productId: string,
+    productQuantity: number,
+    productName: string,
+    productPrice: number,
+    productImageUrl: string
+  ) => void;
   submitOrder: () => void;
+  currentOrderingProduct: string;
+  currentOrderQuantity: number;
 }
 
-const ProductItem: React.FC<ProductItemProps> = ({ item, submitOrder }) => {
+const ProductItem: React.FC<ProductItemProps> = ({
+  item,
+  onSetProduct,
+  submitOrder,
+  currentOrderingProduct,
+  currentOrderQuantity,
+}) => {
+  const [productQuantity, setProductQuantity] = useState(0);
+
+  useEffect(() => {
+    if (currentOrderingProduct !== item.productId) setProductQuantity(0);
+  }, [currentOrderingProduct]);
+
+  const onAdjustQuantity = (isIncrease: boolean) => {
+    let newQuantity = isIncrease ? productQuantity + 1 : productQuantity - 1;
+
+    if (newQuantity < 0) return;
+
+    setProductQuantity(newQuantity);
+
+    onSetProduct(
+      item.productId,
+      newQuantity,
+      item.productTitle,
+      item.productPrice,
+      item.productImageUrl
+    );
+  };
+
+  const onChangeQuantity = (text: string) => {
+    let newQuantity = parseInt(text);
+    if (isNaN(newQuantity)) return;
+    if (newQuantity < 0) return;
+
+    setProductQuantity(newQuantity);
+
+    onSetProduct(
+      item.productId,
+      newQuantity,
+      item.productTitle,
+      item.productPrice,
+      item.productImageUrl
+    );
+  };
+
   return (
     <View style={styles.productContainer}>
       <View style={styles.productItem}>
@@ -32,13 +86,23 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, submitOrder }) => {
         <Text>{item.productPrice}</Text>
 
         <View style={styles.productQuantityContainer}>
-          <TouchableOpacity style={styles.productQuantitAdjuster}>
+          <TouchableOpacity
+            style={styles.productQuantitAdjuster}
+            onPress={() => onAdjustQuantity(false)}
+          >
             <Text>-</Text>
           </TouchableOpacity>
           <View style={styles.productQuantityInput}>
-            <TextInput />
+            <TextInput
+              style={{ textAlign: "center" }}
+              value={productQuantity.toString()}
+              onChangeText={(text) => onChangeQuantity(text)}
+            />
           </View>
-          <TouchableOpacity style={styles.productQuantitAdjuster}>
+          <TouchableOpacity
+            style={styles.productQuantitAdjuster}
+            onPress={() => onAdjustQuantity(true)}
+          >
             <Text>+</Text>
           </TouchableOpacity>
         </View>
@@ -46,9 +110,15 @@ const ProductItem: React.FC<ProductItemProps> = ({ item, submitOrder }) => {
           <Button
             title="Naruči"
             color={Colors.darkBlue}
-            onPress={() => submitOrder()}
+            onPress={() => {
+              if(!productQuantity) return;
+              if(productQuantity < 1) return;
+              if(isNaN(productQuantity)) return
+              submitOrder()}}
           />
         </View>
+
+        <Text>{currentOrderQuantity.toString()}</Text>
       </View>
     </View>
   );

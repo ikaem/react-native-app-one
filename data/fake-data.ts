@@ -58,57 +58,161 @@ export const cartItems = [
   ),
 ];
 
-export const orders = [
-  new Order(
-    "o1",
-    new Date(),
-    ["Razglednica", "Slika"],
-    200,
-    20,
-    160,
-    true,
-    "b1"
-  ),
-  new Order(
-    "o2",
-    new Date(),
-    ["Bijelo vino", "Maslinovo ulje"],
-    500,
-    20,
-    430,
-    false,
-    "b2"
-  ),
-  new Order("o3", new Date(), ["Razglednica"], 100, 20, 80, true, "b1"),
-  new Order("o4", new Date(), ["Maslinovo ulje"], 250, 20, 110, false, "b1"),
-  new Order(
-    "o5",
-    new Date(),
-    ["Crno vino", "Maslinovo ulje"],
-    1000,
-    20,
-    890,
-    true,
-    "b3"
-  ),
-  new Order(
-    "o6",
-    new Date(),
-    ["Razglednica", "Maslinovo ulje", "Crno vino"],
-    430,
-    20,
-    332,
-    false,
-    "b4"
-  ),
-  new Order("o7", new Date(), ["Lavanda", "Medica"], 100, 5, 80, true, "b4"),
-  new Order("o8", new Date(), ["Lopta", "Kiwi"], 100, 5, 80, false, "b2"),
-  new Order("o9", new Date(), ["Dres Hajduka", "Kifla"], 100, 5, 80, true, "b2"),
-  new Order("o10", new Date(), ["Japanke", "Sladoled"], 100, 5, 80, false, "b2"),
-  new Order("o11", new Date(), ["Davor Šuker", "Sveta voda", "Kikiriki"], 100, 5, 80, true, "b3"),
-  new Order("o12", new Date(), ["Lavanda", "Pivo"], 100, 5, 80, false, "b4"),
-  new Order("o13", new Date(), ["Macaklin", "Maslina, cijela"], 100, 5, 80, true, "b2"),
-];
+// export const orders = [
+//   new Order(
+//     "o1",
+//     new Date(),
+//     ["Razglednica", "Slika"],
+//     200,
+//     20,
+//     160,
+//     true,
+//     "b1",
+//     [
+//       new CartItem(
+//         "ci2",
+//         "Maslinovo ulje",
+//         16.66,
+//         2,
+//         33.86,
+//         "https://source.unsplash.com/200x200/?nature,water"
+//       ),
+//       new CartItem(
+//         "ci3",
+//         "Slika",
+//         34.6,
+//         23,
+//         54.86,
+//         "https://source.unsplash.com/200x200/?nature,water"
+//       ),
+//       new CartItem(
+//         "ci4",
+//         "Biska",
+//         6.99,
+//         6,
+//         23.86,
+//         "https://source.unsplash.com/200x200/?nature,water"
+//       ),
+//       new CartItem(
+//         "ci5",
+//         "Osvježivač zraka",
+//         19.99,
+//         6,
+//         13.86,
+//         "https://source.unsplash.com/200x200/?nature,water"
+//       ),
+//     ]
+//   ),
+//   new Order(
+//     "o2",
+//     new Date(),
+//     ["Bijelo vino", "Maslinovo ulje"],
+//     500,
+//     20,
+//     430,
+//     false,
+//     "b2",
+//     [
+//       new CartItem(
+//         "ci2",
+//         "Maslinovo ulje",
+//         16.66,
+//         2,
+//         33.86,
+//         "https://source.unsplash.com/200x200/?nature,water"
+//       ),
+//       new CartItem(
+//         "ci3",
+//         "Slika",
+//         34.6,
+//         23,
+//         54.86,
+//         "https://source.unsplash.com/200x200/?nature,water"
+//       ),
+//       new CartItem(
+//         "ci4",
+//         "Biska",
+//         6.99,
+//         6,
+//         23.86,
+//         "https://source.unsplash.com/200x200/?nature,water"
+//       ),
+//       new CartItem(
+//         "ci5",
+//         "Osvježivač zraka",
+//         19.99,
+//         6,
+//         13.86,
+//         "https://source.unsplash.com/200x200/?nature,water"
+//       ),
+//     ]
+//   ),
+//   new Order("o3", new Date(), ["Razglednica"], 100, 20, 80, true, "b1"),
+//   new Order("o4", new Date(), ["Maslinovo ulje"], 250, 20, 110, false, "b1"),
+//   new Order(
+//     "o5",
+//     new Date(),
+//     ["Crno vino", "Maslinovo ulje"],
+//     1000,
+//     20,
+//     890,
+//     true,
+//     "b3"
+//   ),
+//   new Order(
+//     "o6",
+//     new Date(),
+//     ["Razglednica", "Maslinovo ulje", "Crno vino"],
+//     430,
+//     20,
+//     332,
+//     false,
+//     "b4"
+//   ),
+//   new Order("o7", new Date(), ["Lavanda", "Medica"], 100, 5, 80, true, "b4"),
+//   new Order("o8", new Date(), ["Lopta", "Kiwi"], 100, 5, 80, false, "b2"),
+//   new Order(
+//     "o9",
+//     new Date(),
+//     ["Dres Hajduka", "Kifla"],
+//     100,
+//     5,
+//     80,
+//     true,
+//     "b2"
+//   ),
+//   new Order(
+//     "o10",
+//     new Date(),
+//     ["Japanke", "Sladoled"],
+//     100,
+//     5,
+//     80,
+//     false,
+//     "b2"
+//   ),
+//   new Order(
+//     "o11",
+//     new Date(),
+//     ["Davor Šuker", "Sveta voda", "Kikiriki"],
+//     100,
+//     5,
+//     80,
+//     true,
+//     "b3"
+//   ),
+//   new Order("o12", new Date(), ["Lavanda", "Pivo"], 100, 5, 80, false, "b4"),
+//   new Order(
+//     "o13",
+//     new Date(),
+//     ["Macaklin", "Maslina, cijela"],
+//     100,
+//     5,
+//     80,
+//     true,
+//     "b2"
+//   ),
+// ];
 
 export const categories = [
   new Category("c1", "Souvenirs"),

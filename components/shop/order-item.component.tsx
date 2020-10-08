@@ -30,7 +30,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ item, onNavigate }) => {
               fontWeight: item.isConfirmed ? "400" : "bold",
             }}
           >
-            {item.orderTotal.toString()} kn
+            {item.orderTotal.toFixed(2)} kn
           </Text>
         </View>
       </View>

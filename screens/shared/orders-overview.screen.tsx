@@ -3,30 +3,55 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 
 import OrderItem from "../../components/shop/order-item.component";
 
 import Colors from "../../constants/colors.constants";
-import { orders } from "../../data/fake-data";
-import { UserStackNavParams } from "../../navigation/navigation-types";
+import {
+  AdminStackNavParams,
+  UserStackNavParams,
+} from "../../navigation/navigation-types";
+import { RootStateType } from "../../providers/app.providers";
 
-interface UserOrdersOverviewScreenProps {
+interface OrdersOverviewScreenProps {
   navigation: StackNavigationProp<
-    UserStackNavParams,
-    "UserOrdersOverviewScreen"
+    UserStackNavParams & AdminStackNavParams,
+    "UserOrdersOverviewScreen" | "OrdersOverviewScreen"
   >;
-  route: RouteProp<UserStackNavParams, "UserOrdersOverviewScreen">;
+  route: RouteProp<
+    UserStackNavParams & AdminStackNavParams,
+    "UserOrdersOverviewScreen" | "OrdersOverviewScreen"
+  >;
 }
 
-const UserOrdersOverviewScreen: React.FC<UserOrdersOverviewScreenProps> = ({
+const OrdersOverviewScreen: React.FC<OrdersOverviewScreenProps> = ({
   navigation,
   route,
 }) => {
+  const routeName = route.name;
+  const navigateToOrder = (orderId: string) => {
+    console.log("routeeeeeeeee", route);
+
+    const toRoute =
+      routeName === "UserOrdersOverviewScreen"
+        ? "UserOrderDetailedScreen"
+        : "OrderDetailedScreen";
+
+    navigation.navigate(toRoute, {
+      orderId,
+    });
+  };
+
   const [isCompletedOrders, setIsCompletedOrders] = useState(true);
 
-  const myOrders = orders.filter((order) => order.buyerId === "b2");
+  const orders = useSelector((state: RootStateType) => {
+    if (routeName === "OrdersOverviewScreen") return state.orders.orders;
 
-  const myFilteredOrders = myOrders.filter(
+    return state.orders.orders.filter((order) => order.buyerId === "b2");
+  });
+
+  const filteredOrders = orders.filter(
     (order) => order.isConfirmed === isCompletedOrders
   );
 
@@ -71,20 +96,13 @@ const UserOrdersOverviewScreen: React.FC<UserOrdersOverviewScreenProps> = ({
       <View style={{ flex: 1 }}>
         <FlatList
           contentContainerStyle={styles.orderItemsContainer}
-          data={myFilteredOrders}
+          data={filteredOrders}
           keyExtractor={(order) => order.orderId}
           renderItem={({ item }) => {
             return (
-              // <View style={styles.orderItem}>
-              //   <Text>{item.formattedDate}</Text>
-              // </View>
               <OrderItem
                 item={item}
-                onNavigate={() =>
-                  navigation.navigate("UserOrderDetailedScreen", {
-                    orderId: item.orderId,
-                  })
-                }
+                onNavigate={() => navigateToOrder(item.orderId)}
               />
             );
           }}
@@ -94,7 +112,7 @@ const UserOrdersOverviewScreen: React.FC<UserOrdersOverviewScreenProps> = ({
   );
 };
 
-export default UserOrdersOverviewScreen;
+export default OrdersOverviewScreen;
 
 const styles = StyleSheet.create({
   screen: {

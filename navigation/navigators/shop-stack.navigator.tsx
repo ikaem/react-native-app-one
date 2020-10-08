@@ -30,9 +30,7 @@ const ShopStackNavigator: React.FC = () => {
                 <Item
                   iconName="md-menu"
                   title="Izbornik"
-                  onPress={() => {
-                    navigation.toggleDrawer();
-                  }}
+                  onPress={navigation.toggleDrawer}
                 />
                 {canGoBack && <HeaderBackButton onPress={navigation.goBack} />}
                 <Item

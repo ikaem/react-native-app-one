@@ -7,9 +7,12 @@ import {
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import AdminHomeScreen from "../../screens/admin/admin-home.screen";
-import OrderDetailedScreen from "../../screens/admin/order-detailed.screen";
-import OrdersOverviewScreen from "../../screens/admin/orders-overview.screen";
+// import OrderDetailedScreen from "../../screens/admin/order-detailed.screen";
+// import OrdersOverviewScreen from "../../screens/admin/orders-overview.screen";
 import HeaderIconButton from "../../components/UI/header-icon-button.component";
+import OrderDetailedScreen from "../../screens/shared/order-detailed.screen";
+import OrdersOverviewScreen from "../../screens/shared/orders-overview.screen";
+
 
 import { AdminStackNavParams } from "../navigation-types";
 
@@ -30,13 +33,6 @@ const AdminStackNavigator = () => {
                   onPress={navigation.toggleDrawer}
                 />
                 {canGoBack && <HeaderBackButton onPress={navigation.goBack} />}
-                {/* <Item
-                  iconName="md-cart"
-                  title="Košarica"
-                  onPress={() => {
-                    console.log("to cart screen");
-                  }}
-                /> */}
               </HeaderButtons>
             );
           },
@@ -46,17 +42,17 @@ const AdminStackNavigator = () => {
       <Stack.Screen name="AdminHomeScreen" component={AdminHomeScreen} />
       <Stack.Screen
         name="OrdersOverviewScreen"
+        // component={OrdersOverviewScreen}
         component={OrdersOverviewScreen}
-        options={({ navigation, route }) => {
+        options={() => {
           return {
-            headerTitle: route.params.completed
-              ? "Potvrđene narudžbe"
-              : "Nepotvrđene nardudžbe",
+            headerTitle: "Narudžbe",
           };
         }}
       />
       <Stack.Screen
         name="OrderDetailedScreen"
+        // component={OrderDetailedScreen}
         component={OrderDetailedScreen}
       />
     </Stack.Navigator>

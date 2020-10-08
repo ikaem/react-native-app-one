@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,34 +9,69 @@ import {
 } from "react-native";
 
 import Colors from "../../constants/colors.constants";
+import { cartItems } from "../../data/fake-data";
+import CartItem from "../../models/cart-item.model";
+import { orderedProductItem } from "../../models/order.model";
 
 interface OrderedProductItemProps {
-  item: string; // for now, waiting on model for cart item
+  item: orderedProductItem;
   isUserOrder?: boolean;
+  dispatchNewDiscount: (
+    orderedProductDiscount: number,
+    orderedProductId: string
+  ) => void;
 }
 
 const OrderedProductItem: React.FC<OrderedProductItemProps> = ({
   item,
   isUserOrder,
+  dispatchNewDiscount,
 }) => {
+
+  // console.log("from product item", item)
+
+  const [orderedProductDiscount, setOrderedProductDiscount] = useState("0");
+
+  const adjustProductDiscount = (text: string) => {
+    const adjustedDiscount = Number(text);
+    if (isNaN(adjustedDiscount)) return;
+    if (adjustedDiscount < 0) return;
+    if (adjustedDiscount > 100) return;
+    setOrderedProductDiscount(text);
+  };
+
+  useEffect(() => {
+
+    dispatchNewDiscount(
+      Number(orderedProductDiscount),
+      item.orderedProductItemId
+    );
+  }, [orderedProductDiscount]);
+
   return (
     <View style={styles.orderItem}>
       <Image
         style={styles.orderedProductImage}
         source={{
-          uri: "https://source.unsplash.com/200x200/?nature,water",
+          uri: item.orderedProductItemImageUrl,
         }}
       />
       <View style={styles.orderedProductInfo}>
-        <Text style={styles.orderedProductTitle}>{item}</Text>
-        <Text>Cijena</Text>
-        <Text>Količina</Text>
+        <Text style={styles.orderedProductTitle}>
+          {item.orderedProductItemName}
+        </Text>
+        <Text>Cijena po komadu: {item.orderedProductItemPrice.toFixed(2)}</Text>
+        <Text>Komada: {item.orderedProductItemQuantity}</Text>
       </View>
 
       {!isUserOrder && (
         <View style={styles.orderedProductDiscount}>
           <Text>Popust</Text>
-          <TextInput style={styles.orderedProdcutDiscountInput} />
+          <TextInput
+            value={orderedProductDiscount}
+            onChangeText={(text) => adjustProductDiscount(text)}
+            style={styles.orderedProdcutDiscountInput}
+          />
 
           <TouchableOpacity
             style={styles.orderedProductDiscountAction}
@@ -49,10 +84,14 @@ const OrderedProductItem: React.FC<OrderedProductItemProps> = ({
 
       <View style={styles.orderedProductCost}>
         <Text style={styles.orderedProductCostAmount}>
-          Ukupna cijena: <Text>{"1111"} kn</Text>
+          Cijena: <Text>{item.orderedProductItemSubtotal.toFixed(2)} kn</Text>
         </Text>
         <Text style={styles.orderedProductCostAmount}>
-          Odobreni popusti: <Text>{"11"}%</Text>
+          Odobren popust: <Text>{item.orderedProductItemDiscount}%</Text>
+        </Text>
+
+        <Text style={styles.orderedProductCostAmount}>
+          Ukupna cijena: <Text>{item.orderedProductItemTotal.toFixed(2)} kn</Text>
         </Text>
       </View>
     </View>

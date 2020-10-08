@@ -14,11 +14,11 @@ export type AppDrawerNavParams = {
 
 export type AdminStackNavParams = {
   AdminHomeScreen: undefined;
+  OrdersOverviewScreen: {
+    // completed: boolean;
+  };
   OrderDetailedScreen: {
     orderId: string;
-  };
-  OrdersOverviewScreen: {
-    completed: boolean;
   };
 };
 

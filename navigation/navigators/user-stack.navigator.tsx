@@ -8,8 +8,8 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import { UserStackNavParams } from "../navigation-types";
 
-import UserOrdersOverviewScreen from "../../screens/user/user-orders-overview.screen";
-import UserOrderDetailedScreen from "../../screens/user/user-order-detailed.screen";
+import OrdersOverviewScreen from "../../screens/shared/orders-overview.screen";
+import OrderDetailedScreen from "../../screens/shared/order-detailed.screen";
 import HeaderIconButton from "../../components/UI/header-icon-button.component";
 
 const Stack = createStackNavigator<UserStackNavParams>();
@@ -24,7 +24,7 @@ const UserStackNavigator = () => {
             return (
               <HeaderButtons HeaderButtonComponent={HeaderIconButton}>
                 <Item
-                  title="Izborinik"
+                  title="Izbornik"
                   iconName="md-menu"
                   onPress={navigation.toggleDrawer}
                 />
@@ -37,11 +37,11 @@ const UserStackNavigator = () => {
     >
       <Stack.Screen
         name="UserOrdersOverviewScreen"
-        component={UserOrdersOverviewScreen}
+        component={OrdersOverviewScreen}
       />
       <Stack.Screen
         name="UserOrderDetailedScreen"
-        component={UserOrderDetailedScreen}
+        component={OrderDetailedScreen}
       />
     </Stack.Navigator>
   );
