@@ -149,6 +149,7 @@ const OrderDetailedScreen: React.FC<OrderDetailedScreenProps> = ({
   navigation,
   route,
 }) => {
+  console.log("just test");
   const [orderForConfirmState, dispatchOrderForConfirmState] = useReducer(
     orderForConfirmReducer,
     initialOrderFormConfirmState
